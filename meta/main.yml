@@ -1,0 +1,18 @@
+galaxy_info:
+  role_name: systemd_networkd_macvlan_trunk
+  author: jamesandariese
+  description: an ansible role for creating a macvlan trunk with systemd-networkd
+  company: strudelline.net
+  license: MIT
+  min_ansible_version: 2.9
+  galaxy_tags:
+   - network
+   - networking
+   - macvlan
+   - trunk
+   - bridge
+  platforms:
+   - {"name": "GenericLinux", "versions": ["all"]}
+   - {"name": "Ubuntu", "versions": ["all"]}
+   - {"name": "Debian", "versions": ["all"]}
+dependencies: []

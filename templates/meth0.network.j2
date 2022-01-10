@@ -1,0 +1,11 @@
+[Match]
+Name={{ meth_if_name }}
+
+[Network]
+Address={{ network_static_ip }}/{{ network_size }}
+Gateway={{ network_gateway }}
+Domains={% for d in network_domains %}{{ d }} {% endfor %}
+
+{% for d in network_dns_servers %}
+DNS={{ d }}
+{% endfor %}

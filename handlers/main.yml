@@ -1,0 +1,31 @@
+---
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+- listen: reconfigure networking
+  name: disable network manager
+  systemd:
+    daemon_reload: yes
+    enabled: no
+    masked: yes
+    name: NetworkManager
+- listen: reconfigure networking
+  name: disable network manager
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    masked: no
+    name: systemd-networkd
+- listen: enable promiscuous trunk
+  name: enable promiscuous trunk service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    name: "promiscuous@{{ trunk_if_name }}"
+- listen: reconfigure networking
+  reboot:
+- listen: enable promiscuous trunk
+  name: ensure promiscuous trunk service is started
+  systemd:
+    state: started
+    name: "promiscuous@{{ trunk_if_name }}"

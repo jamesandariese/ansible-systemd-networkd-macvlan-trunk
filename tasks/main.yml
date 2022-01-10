@@ -1,0 +1,33 @@
+---
+- name: place promiscuous service
+  copy:
+    src: promiscuous@.service
+    dest: /etc/systemd/system/promiscuous@.service
+  notify: systemd enable promiscuous trunk
+- name: place docker service overrides
+  copy:
+    src: docker.service.d_overrides.conf
+    dest: /etc/systemd/system/docker.service.d/overrides.conf
+  notify: systemd daemon-reload
+- name: configure trunk link
+  template:
+    src: trunk.link.j2
+    dest: /etc/systemd/network/05-trunk.link
+  notify: reconfigure networking
+- name: configure trunk device
+  template:
+    src: trunk.network.j2
+    dest: /etc/systemd/network/05-trunk.network
+  notify: reconfigure networking
+- name: create main eth if netdev
+  template:
+    src: meth0.netdev.j2
+    dest: /etc/systemd/network/05-meth0.netdev
+  notify: reconfigure networking
+- name: configure main eth if network
+  template:
+    src: meth0.network.j2
+    dest: /etc/systemd/network/05-meth0.network
+  notify: reconfigure networking
+- name: flush handlers
+  meta: flush_handlers

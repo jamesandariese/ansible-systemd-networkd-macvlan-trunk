@@ -1,0 +1,10 @@
+[Unit]
+Description=Enable promiscuous packet processing for %i interface
+After=sys-subsystem-net-devices-%i.device
+
+[Service]
+Type=oneshot
+ExecStart=ip l set %i promisc on
+
+[Install]
+WantedBy=network-online.target
