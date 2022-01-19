@@ -3,7 +3,17 @@
   copy:
     src: promiscuous@.service
     dest: /etc/systemd/system/promiscuous@.service
-  notify: systemd enable promiscuous trunk
+  notify: enable promiscuous trunk
+- name: enable promiscuous trunk service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: "promiscuous@{{ trunk_if_name }}"
+- name: ensure docker.service.d path exists
+  file:
+    dest: /etc/systemd/system/docker.service.d
+    state: directory
 - name: place docker service overrides
   copy:
     src: docker.service.d_overrides.conf
